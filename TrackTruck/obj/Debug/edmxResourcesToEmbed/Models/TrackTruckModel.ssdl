@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TrackTruckModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="contact_petitions">
+    <Key>
+      <PropertyRef Name="contact_petition_id" />
+    </Key>
+    <Property Name="contact_petition_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="owner_id" Type="int" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="content" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="employees">
+    <Key>
+      <PropertyRef Name="employee_id" />
+    </Key>
+    <Property Name="employee_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="owner_id" Type="int" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="foodtrucks">
+    <Key>
+      <PropertyRef Name="foodtruck_id" />
+    </Key>
+    <Property Name="foodtruck_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="latitude" Type="float" Nullable="false" />
+    <Property Name="longitude" Type="float" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="food_type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="owner_id" Type="int" Nullable="false" />
+    <Property Name="avg_price" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="owners">
+    <Key>
+      <PropertyRef Name="owner_id" />
+    </Key>
+    <Property Name="owner_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="ruc" Type="varchar" MaxLength="11" Nullable="false" />
+  </EntityType>
+  <EntityType Name="reviews">
+    <Key>
+      <PropertyRef Name="review_id" />
+    </Key>
+    <Property Name="review_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="foodtruck_id" Type="int" Nullable="false" />
+    <Property Name="content" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="date" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sales_records">
+    <Key>
+      <PropertyRef Name="sales_record_id" />
+    </Key>
+    <Property Name="sales_record_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="employee_id" Type="int" Nullable="false" />
+    <Property Name="value" Type="float" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="content" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="phone_number" Type="varchar" MaxLength="11" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_contact_petitions_owners">
+    <End Role="owners" Type="Self.owners" Multiplicity="1" />
+    <End Role="contact_petitions" Type="Self.contact_petitions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="owners">
+        <PropertyRef Name="owner_id" />
+      </Principal>
+      <Dependent Role="contact_petitions">
+        <PropertyRef Name="owner_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_contact_petitions_users">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="contact_petitions" Type="Self.contact_petitions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="contact_petitions">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_employees_owners">
+    <End Role="owners" Type="Self.owners" Multiplicity="1" />
+    <End Role="employees" Type="Self.employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="owners">
+        <PropertyRef Name="owner_id" />
+      </Principal>
+      <Dependent Role="employees">
+        <PropertyRef Name="owner_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_foodtrucks_owners">
+    <End Role="owners" Type="Self.owners" Multiplicity="1" />
+    <End Role="foodtrucks" Type="Self.foodtrucks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="owners">
+        <PropertyRef Name="owner_id" />
+      </Principal>
+      <Dependent Role="foodtrucks">
+        <PropertyRef Name="owner_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reviews_trucks">
+    <End Role="foodtrucks" Type="Self.foodtrucks" Multiplicity="1" />
+    <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="foodtrucks">
+        <PropertyRef Name="foodtruck_id" />
+      </Principal>
+      <Dependent Role="reviews">
+        <PropertyRef Name="foodtruck_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reviews_users">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="reviews">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_sales_registries_employees">
+    <End Role="employees" Type="Self.employees" Multiplicity="1" />
+    <End Role="sales_records" Type="Self.sales_records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employees">
+        <PropertyRef Name="employee_id" />
+      </Principal>
+      <Dependent Role="sales_records">
+        <PropertyRef Name="employee_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TrackTruckModelStoreContainer">
+    <EntitySet Name="contact_petitions" EntityType="Self.contact_petitions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employees" EntityType="Self.employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="foodtrucks" EntityType="Self.foodtrucks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="owners" EntityType="Self.owners" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="reviews" EntityType="Self.reviews" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sales_records" EntityType="Self.sales_records" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_contact_petitions_owners" Association="Self.FK_contact_petitions_owners">
+      <End Role="owners" EntitySet="owners" />
+      <End Role="contact_petitions" EntitySet="contact_petitions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_contact_petitions_users" Association="Self.FK_contact_petitions_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="contact_petitions" EntitySet="contact_petitions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_employees_owners" Association="Self.FK_employees_owners">
+      <End Role="owners" EntitySet="owners" />
+      <End Role="employees" EntitySet="employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_foodtrucks_owners" Association="Self.FK_foodtrucks_owners">
+      <End Role="owners" EntitySet="owners" />
+      <End Role="foodtrucks" EntitySet="foodtrucks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reviews_trucks" Association="Self.FK_reviews_trucks">
+      <End Role="foodtrucks" EntitySet="foodtrucks" />
+      <End Role="reviews" EntitySet="reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reviews_users" Association="Self.FK_reviews_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="reviews" EntitySet="reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sales_registries_employees" Association="Self.FK_sales_registries_employees">
+      <End Role="employees" EntitySet="employees" />
+      <End Role="sales_records" EntitySet="sales_records" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

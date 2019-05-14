@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TrackTruckModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="contact_petitions">
+    <Key>
+      <PropertyRef Name="contact_petition_id" />
+    </Key>
+    <Property Name="contact_petition_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="owner_id" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="content" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="owners" Relationship="Self.FK_contact_petitions_owners" FromRole="contact_petitions" ToRole="owners" />
+    <NavigationProperty Name="users" Relationship="Self.FK_contact_petitions_users" FromRole="contact_petitions" ToRole="users" />
+  </EntityType>
+  <EntityType Name="employees">
+    <Key>
+      <PropertyRef Name="employee_id" />
+    </Key>
+    <Property Name="employee_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="owner_id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="owners" Relationship="Self.FK_employees_owners" FromRole="employees" ToRole="owners" />
+    <NavigationProperty Name="sales_records" Relationship="Self.FK_sales_registries_employees" FromRole="employees" ToRole="sales_records" />
+  </EntityType>
+  <EntityType Name="foodtrucks">
+    <Key>
+      <PropertyRef Name="foodtruck_id" />
+    </Key>
+    <Property Name="foodtruck_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="latitude" Type="Double" Nullable="false" />
+    <Property Name="longitude" Type="Double" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="food_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="owner_id" Type="Int32" Nullable="false" />
+    <Property Name="avg_price" Type="Double" Nullable="false" />
+    <NavigationProperty Name="owners" Relationship="Self.FK_foodtrucks_owners" FromRole="foodtrucks" ToRole="owners" />
+    <NavigationProperty Name="reviews" Relationship="Self.FK_reviews_trucks" FromRole="foodtrucks" ToRole="reviews" />
+  </EntityType>
+  <EntityType Name="owners">
+    <Key>
+      <PropertyRef Name="owner_id" />
+    </Key>
+    <Property Name="owner_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ruc" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="contact_petitions" Relationship="Self.FK_contact_petitions_owners" FromRole="owners" ToRole="contact_petitions" />
+    <NavigationProperty Name="employees" Relationship="Self.FK_employees_owners" FromRole="owners" ToRole="employees" />
+    <NavigationProperty Name="foodtrucks" Relationship="Self.FK_foodtrucks_owners" FromRole="owners" ToRole="foodtrucks" />
+  </EntityType>
+  <EntityType Name="reviews">
+    <Key>
+      <PropertyRef Name="review_id" />
+    </Key>
+    <Property Name="review_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="foodtruck_id" Type="Int32" Nullable="false" />
+    <Property Name="content" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="foodtrucks" Relationship="Self.FK_reviews_trucks" FromRole="reviews" ToRole="foodtrucks" />
+    <NavigationProperty Name="users" Relationship="Self.FK_reviews_users" FromRole="reviews" ToRole="users" />
+  </EntityType>
+  <EntityType Name="sales_records">
+    <Key>
+      <PropertyRef Name="sales_record_id" />
+    </Key>
+    <Property Name="sales_record_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="employee_id" Type="Int32" Nullable="false" />
+    <Property Name="value" Type="Double" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="content" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="employees" Relationship="Self.FK_sales_registries_employees" FromRole="sales_records" ToRole="employees" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="contact_petitions" Relationship="Self.FK_contact_petitions_users" FromRole="users" ToRole="contact_petitions" />
+    <NavigationProperty Name="reviews" Relationship="Self.FK_reviews_users" FromRole="users" ToRole="reviews" />
+  </EntityType>
+  <Association Name="FK_contact_petitions_owners">
+    <End Role="owners" Type="Self.owners" Multiplicity="1" />
+    <End Role="contact_petitions" Type="Self.contact_petitions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="owners">
+        <PropertyRef Name="owner_id" />
+      </Principal>
+      <Dependent Role="contact_petitions">
+        <PropertyRef Name="owner_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_contact_petitions_users">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="contact_petitions" Type="Self.contact_petitions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="contact_petitions">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_employees_owners">
+    <End Role="owners" Type="Self.owners" Multiplicity="1" />
+    <End Role="employees" Type="Self.employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="owners">
+        <PropertyRef Name="owner_id" />
+      </Principal>
+      <Dependent Role="employees">
+        <PropertyRef Name="owner_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_sales_registries_employees">
+    <End Role="employees" Type="Self.employees" Multiplicity="1" />
+    <End Role="sales_records" Type="Self.sales_records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="employees">
+        <PropertyRef Name="employee_id" />
+      </Principal>
+      <Dependent Role="sales_records">
+        <PropertyRef Name="employee_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_foodtrucks_owners">
+    <End Role="owners" Type="Self.owners" Multiplicity="1" />
+    <End Role="foodtrucks" Type="Self.foodtrucks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="owners">
+        <PropertyRef Name="owner_id" />
+      </Principal>
+      <Dependent Role="foodtrucks">
+        <PropertyRef Name="owner_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reviews_trucks">
+    <End Role="foodtrucks" Type="Self.foodtrucks" Multiplicity="1" />
+    <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="foodtrucks">
+        <PropertyRef Name="foodtruck_id" />
+      </Principal>
+      <Dependent Role="reviews">
+        <PropertyRef Name="foodtruck_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reviews_users">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="reviews">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TrackTruckEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="contact_petitions" EntityType="Self.contact_petitions" />
+    <EntitySet Name="employees" EntityType="Self.employees" />
+    <EntitySet Name="foodtrucks" EntityType="Self.foodtrucks" />
+    <EntitySet Name="owners" EntityType="Self.owners" />
+    <EntitySet Name="reviews" EntityType="Self.reviews" />
+    <EntitySet Name="sales_records" EntityType="Self.sales_records" />
+    <EntitySet Name="users" EntityType="Self.users" />
+    <AssociationSet Name="FK_contact_petitions_owners" Association="Self.FK_contact_petitions_owners">
+      <End Role="owners" EntitySet="owners" />
+      <End Role="contact_petitions" EntitySet="contact_petitions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_contact_petitions_users" Association="Self.FK_contact_petitions_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="contact_petitions" EntitySet="contact_petitions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_employees_owners" Association="Self.FK_employees_owners">
+      <End Role="owners" EntitySet="owners" />
+      <End Role="employees" EntitySet="employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sales_registries_employees" Association="Self.FK_sales_registries_employees">
+      <End Role="employees" EntitySet="employees" />
+      <End Role="sales_records" EntitySet="sales_records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_foodtrucks_owners" Association="Self.FK_foodtrucks_owners">
+      <End Role="owners" EntitySet="owners" />
+      <End Role="foodtrucks" EntitySet="foodtrucks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reviews_trucks" Association="Self.FK_reviews_trucks">
+      <End Role="foodtrucks" EntitySet="foodtrucks" />
+      <End Role="reviews" EntitySet="reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reviews_users" Association="Self.FK_reviews_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="reviews" EntitySet="reviews" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
