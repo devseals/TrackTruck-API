@@ -37,6 +37,7 @@
           <Property Name="food_type" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="owner_id" Type="int" Nullable="false" />
           <Property Name="avg_price" Type="float" Nullable="false" />
+          <Property Name="phone_number" Type="varchar" MaxLength="11" />
         </EntityType>
         <EntityType Name="owners">
           <Key>
@@ -241,6 +242,7 @@
           <Property Name="food_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="owner_id" Type="Int32" Nullable="false" />
           <Property Name="avg_price" Type="Double" Nullable="false" />
+          <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="owners" Relationship="Self.FK_foodtrucks_owners" FromRole="foodtrucks" ToRole="owners" />
           <NavigationProperty Name="reviews" Relationship="Self.FK_reviews_trucks" FromRole="foodtrucks" ToRole="reviews" />
         </EntityType>
@@ -453,6 +455,7 @@
                 <ScalarProperty Name="food_type" ColumnName="food_type" />
                 <ScalarProperty Name="owner_id" ColumnName="owner_id" />
                 <ScalarProperty Name="avg_price" ColumnName="avg_price" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

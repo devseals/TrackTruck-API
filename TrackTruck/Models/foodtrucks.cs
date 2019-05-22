@@ -27,6 +27,7 @@ namespace TrackTruck.Models
         public string food_type { get; set; }
         public int owner_id { get; set; }
         public double avg_price { get; set; }
+        public string phone_number { get; set; }
     
         public virtual owners owners { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

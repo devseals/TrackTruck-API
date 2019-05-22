@@ -32,6 +32,7 @@
     <Property Name="food_type" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="owner_id" Type="int" Nullable="false" />
     <Property Name="avg_price" Type="float" Nullable="false" />
+    <Property Name="phone_number" Type="varchar" MaxLength="11" />
   </EntityType>
   <EntityType Name="owners">
     <Key>

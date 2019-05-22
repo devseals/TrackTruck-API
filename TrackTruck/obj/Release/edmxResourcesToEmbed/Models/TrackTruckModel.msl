@@ -34,6 +34,7 @@
           <ScalarProperty Name="food_type" ColumnName="food_type" />
           <ScalarProperty Name="owner_id" ColumnName="owner_id" />
           <ScalarProperty Name="avg_price" ColumnName="avg_price" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

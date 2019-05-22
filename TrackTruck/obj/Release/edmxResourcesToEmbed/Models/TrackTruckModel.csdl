@@ -36,6 +36,7 @@
     <Property Name="food_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="owner_id" Type="Int32" Nullable="false" />
     <Property Name="avg_price" Type="Double" Nullable="false" />
+    <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="owners" Relationship="Self.FK_foodtrucks_owners" FromRole="foodtrucks" ToRole="owners" />
     <NavigationProperty Name="reviews" Relationship="Self.FK_reviews_trucks" FromRole="foodtrucks" ToRole="reviews" />
   </EntityType>
